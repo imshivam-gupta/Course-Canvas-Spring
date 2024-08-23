@@ -6,7 +6,6 @@ import com.example.coursecanvasspring.security.OAuthFailureHandler;
 import com.example.coursecanvasspring.security.OAuthSuccessHandler;
 import com.example.coursecanvasspring.service.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,17 +22,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailService;
+    private final UserDetailsServiceImpl userDetailService;
 
-    @Autowired
-    private OAuthSuccessHandler successHandler;
+    private final OAuthSuccessHandler successHandler;
 
-    @Autowired
-    private OAuthFailureHandler authFailureHandler;
+    private final OAuthFailureHandler authFailureHandler;
 
-    @Autowired
-    private JWTFilter jwtFilter;
+    private final JWTFilter jwtFilter;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailService, OAuthSuccessHandler successHandler, OAuthFailureHandler authFailureHandler, JWTFilter jwtFilter) {
+        this.userDetailService = userDetailService;
+        this.successHandler = successHandler;
+        this.authFailureHandler = authFailureHandler;
+        this.jwtFilter = jwtFilter;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -58,11 +60,9 @@ public class SecurityConfig {
 
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> {
-                    authorize
-                            .requestMatchers(StringConstants.PERMITTED_ROUTES).permitAll()
-                            .anyRequest().authenticated();
-                })
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(StringConstants.PERMITTED_ROUTES).permitAll()
+                        .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

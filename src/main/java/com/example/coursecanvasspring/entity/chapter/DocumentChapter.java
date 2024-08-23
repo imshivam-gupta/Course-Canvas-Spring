@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import static com.example.coursecanvasspring.constants.StringConstants.CHAPTER_COLLECTION;
+
 @Getter
 @Setter
-@Document(collection = "Chapter")
+@Document(collection = CHAPTER_COLLECTION)
 public class DocumentChapter extends Chapter{
 
     public DocumentChapter(){

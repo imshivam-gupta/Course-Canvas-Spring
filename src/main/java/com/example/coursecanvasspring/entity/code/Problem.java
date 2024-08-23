@@ -6,9 +6,11 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.*;
 import java.util.*;
 
+import static com.example.coursecanvasspring.constants.StringConstants.PROBLEM_COLLECTION;
+
 @Getter
 @Setter
-@Document(collection = "Problem")
+@Document(collection = PROBLEM_COLLECTION)
 public class Problem {
     private String _id;
     private String title;

@@ -1,7 +1,7 @@
 package com.example.coursecanvasspring.service;
 
 import com.example.coursecanvasspring.entity.user.User;
-import com.example.coursecanvasspring.repository.UserRepository;
+import com.example.coursecanvasspring.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

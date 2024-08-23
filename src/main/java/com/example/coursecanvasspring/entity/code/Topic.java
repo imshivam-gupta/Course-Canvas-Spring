@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import static com.example.coursecanvasspring.constants.StringConstants.TOPIC_COLLECTION;
+
 @Getter
 @Setter
-@Document(collection = "Topic")
+@Document(collection = TOPIC_COLLECTION)
 public class Topic {
     private String _id;
     private String title;

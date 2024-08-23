@@ -1,4 +1,4 @@
-package com.example.coursecanvasspring.repository;
+package com.example.coursecanvasspring.repository.user;
 
 import com.example.coursecanvasspring.entity.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;

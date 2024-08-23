@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import static com.example.coursecanvasspring.constants.StringConstants.CHAPTER_COLLECTION;
+import static com.example.coursecanvasspring.constants.StringConstants.CHAPTER_TYPE_VIDEO;
+
 @Getter
 @Setter
-@Document(collection = "Chapter")
+@Document(collection = CHAPTER_COLLECTION)
 public class VideoChapter extends Chapter {
 
     public VideoChapter() {
-        this.setContentType("VIDEO");
+        this.setContentType(CHAPTER_TYPE_VIDEO);
     }
 
     private String videoUrl;

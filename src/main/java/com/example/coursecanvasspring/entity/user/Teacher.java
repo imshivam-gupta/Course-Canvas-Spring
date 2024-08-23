@@ -8,19 +8,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.coursecanvasspring.constants.StringConstants.USER_COLLECTION;
+
 @Getter
 @Setter
-@Document(collection = "users")
+@Document(collection = USER_COLLECTION)
 public class Teacher extends User{
     public Teacher() {
         this.setRole(UserRole.INSTRUCTOR);
     }
 
     private String bio;
-    private String website;
-    private String youtube;
-    private String twitter;
-    private String linkedin;
 
     private List<String> curatedCourse = new ArrayList<String>();
     private List<String> publishedCourse = new ArrayList<String>();

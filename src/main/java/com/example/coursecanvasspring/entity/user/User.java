@@ -9,9 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.coursecanvasspring.constants.StringConstants.USER_COLLECTION;
+
 @Getter
 @Setter
-@Document(collection = "users")
+@Document(collection = USER_COLLECTION)
 public class User {
     private String _id;
     private String name;

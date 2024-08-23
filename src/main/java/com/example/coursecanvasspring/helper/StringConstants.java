@@ -1,14 +1,6 @@
 package com.example.coursecanvasspring.helper;
 
 public class StringConstants {
-    public static final String ADMIN_ROLE = "ADMIN";
-    public static final String INSTRUCTOR_ROLE = "INSTRUCTOR";
-    public static final String STUDENT_ROLE = "STUDENT";
-    public static final String ASSISTANT_ROLE = "ASSISTANT";
-
-    public static final String LOCAL_STRATEGY = "LOCAL";
-    public static final String GOOGLE_STRATEGY = "GOOGLE";
-
     public static final String OAUTHUSER_EMAIL_ATTRIBUTE = "email";
     public static final String OAUTHUSER_PROFILEPIC_ATTRIBUTE = "picture";
     public static final String OAUTHUSER_NAME_ATTRIBUTE = "name";

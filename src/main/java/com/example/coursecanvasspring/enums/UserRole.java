@@ -1,16 +1,17 @@
 package com.example.coursecanvasspring.enums;
 
-import com.example.coursecanvasspring.helper.StringConstants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 @Getter
 @AllArgsConstructor
 public enum UserRole {
-    ADMIN(StringConstants.ADMIN_ROLE),
-    INSTRUCTOR(StringConstants.INSTRUCTOR_ROLE),
-    STUDENT(StringConstants.STUDENT_ROLE),
-    ASSISTANT(StringConstants.ASSISTANT_ROLE);
+    ADMIN(ADMIN_ROLE),
+    INSTRUCTOR(INSTRUCTOR_ROLE),
+    STUDENT(STUDENT_ROLE),
+    ASSISTANT(ASSISTANT_ROLE);
 
     private final String role;
 }
