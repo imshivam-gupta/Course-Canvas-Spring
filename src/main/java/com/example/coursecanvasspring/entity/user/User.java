@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Document(collection = "users")
 public class User {
-    private String id;
+    private String _id;
     private String name;
     private String password;
     private String profilePicture;
@@ -31,4 +31,9 @@ public class User {
     private List<String> reviews = new ArrayList<>();
     private List<String> ratings = new ArrayList<>();
     private List<String> discussions = new ArrayList<>();
+
+    private String website;
+    private String youtube;
+    private String twitter;
+    private String linkedin;
 }

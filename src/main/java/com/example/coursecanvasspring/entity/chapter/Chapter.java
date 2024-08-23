@@ -7,12 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document(collection = "chapters")
+@Document(collection = "Chapter")
 public class Chapter {
+    private String _id;
     private String title;
     private String description;
     private Long position;
     private Boolean isPublished;
     private Boolean isFree;
-    private ContentType contentType;
+    private String contentType;
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @Document(collection = "users")
 public class Student extends User{
-
     public Student() {
         this.setRole(UserRole.STUDENT);
     }
