@@ -1,6 +1,5 @@
 package com.example.coursecanvasspring.config;
 
-import com.example.coursecanvasspring.helper.StringConstants;
 import com.example.coursecanvasspring.security.local.JWTFilter;
 import com.example.coursecanvasspring.security.oauth.OAuthFailureHandler;
 import com.example.coursecanvasspring.security.oauth.OAuthSuccessHandler;
@@ -17,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 @Slf4j
 @Configuration
@@ -61,7 +62,9 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(StringConstants.PERMITTED_ROUTES).permitAll()
+                        .requestMatchers(PUBLIC_ROUTES).permitAll()
+                        .requestMatchers(ADMIN_ROUTES).hasAuthority(ADMIN_ROLE)
+                        .requestMatchers(INSTRUCTOR_ROUTES).hasAuthority(INSTRUCTOR_ROLE)
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

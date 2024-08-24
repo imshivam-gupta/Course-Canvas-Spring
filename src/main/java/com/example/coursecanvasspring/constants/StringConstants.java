@@ -25,9 +25,6 @@ public class StringConstants {
     public static final String LOCAL_STRATEGY = "LOCAL";
     public static final String GOOGLE_STRATEGY = "GOOGLE";
 
-    // Permitted Routes
-    public static final String[] PERMITTED_ROUTES = {"/auth/login", "/auth/register", "/auth/google", "/auth/google/callback", "/auth/verify-email", "/auth/forgot-password", "/auth/reset-password", "/auth/refresh-token", "/auth/logout"};
-
     // USER ROLES
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String INSTRUCTOR_ROLE = "INSTRUCTOR";
@@ -38,7 +35,6 @@ public class StringConstants {
     public static final String SUBMISSION_STATUS_PENDING = "PENDING";
     public static final String SUBMISSION_STATUS_ACCEPTED = "ACCEPTED";
     public static final String SUBMISSION_STATUS_REJECTED = "REJECTED";
-
 
     // Chapter Fields
     public static final String TITLE_CHAPTER_FIELD = "title";
@@ -59,7 +55,6 @@ public class StringConstants {
     public static final String[] CHAPTER_CREATE_NOT_NULL_FIELDS = {TITLE_CHAPTER_FIELD, CONTENT_TYPE_CHAPTER_FIELD};
     public static final String[] DOC_CHAPTER_CREATE_NOT_NULL_FIELDS = {ARTICLE_URL_CHAPTER_FIELD};
     public static final String[] VIDEO_CHAPTER_CREATE_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD,DURATION_CHAPTER_FIELD,THUMBNAIL_URL_CHAPTER_FIELD};
-
 
     // Section Fields
     public static final String TITLE_SECTION_FIELD = "title";
@@ -88,9 +83,10 @@ public class StringConstants {
     public static final String FREE_COURSE_FIELD = "isFree";
     public static final String PRICE_COURSE_FIELD = "price";
     public static final String DISCOUNT_COURSE_FIELD = "discount";
+    public static final String CATEGORY_COURSE_FIELD = "category";
 
     // Necessary Fields
-    public static final String[] COURSE_CREATE_NOT_NULL_FIELDS = {TITLE_COURSE_FIELD,DESCRIPTION_COURSE_FIELD,PRICE_COURSE_FIELD,PUBLISHED_COURSE_FIELD,FREE_COURSE_FIELD};
+    public static final String[] COURSE_CREATE_NOT_NULL_FIELDS = {TITLE_COURSE_FIELD,DESCRIPTION_COURSE_FIELD,PRICE_COURSE_FIELD,PUBLISHED_COURSE_FIELD,FREE_COURSE_FIELD,CATEGORY_COURSE_FIELD};
 
     // Company Fields
     public static final String NAME_COMPANY_FIELD = "name";
@@ -143,4 +139,67 @@ public class StringConstants {
     public static final String PROBLEM_OUTPUT_PATH = "problems/%s/tests/outputs/";
     public static final String PROBLEM_INPUT_PATH = "problems/%s/tests/inputs/";
     public static final String BOILERPLATE_PATH = "problems/%s/boilerplate-full/function.%s";
+
+    // AWS S3 Constants
+    public static final String AWS_S3_ACCESS_KEY_ID = "${aws.s3.accessKeyId}";
+    public static final String AWS_S3_SECRET_KEY = "${aws.s3.secretKey}";
+    public static final String AWS_S3_REGION = "${aws.s3.region}";
+
+    // API Routes
+    public static final String API_PREFIX = "/api";
+
+    // Auth Routes
+    public static final String SIGNUP_ROUTE = API_PREFIX + "/signup";
+    public static final String LOGIN_ROUTE = API_PREFIX + "/login";
+
+    // User Routes
+    public static final String USER_ROUTE = API_PREFIX + "/user";
+    public static final String USER_PROFILE_PICTURE_ROUTE = "/profilePicture";
+
+    // Chapter Routes
+    public static final String CHAPTER_ROUTE_PREFIX = API_PREFIX + "/chapter";
+    public static final String GET_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}";
+    public static final String CREATE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/create";
+
+    // Section Routes
+    public static final String SECTION_ROUTE_PREFIX = API_PREFIX + "/section";
+    public static final String GET_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}";
+    public static final String CREATE_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{courseId}/create";
+    public static final String BANNER_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/banner";
+
+    // Course Routes
+    public static final String COURSE_ROUTE_PREFIX = API_PREFIX + "/course";
+    public static final String GET_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}";
+    public static final String CREATE_CATEGORY_ROUTE = COURSE_ROUTE_PREFIX + "/createCategory";
+    public static final String CREATE_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/create";
+    public static final String BANNER_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/banner";
+
+    // Code Routes
+    public static final String CODE_ROUTE_PREFIX = API_PREFIX + "/code";
+    public static final String ADD_COMPANY_ROUTE = CODE_ROUTE_PREFIX + "/addCompany";
+    public static final String ADD_TOPIC_ROUTE = CODE_ROUTE_PREFIX + "/addTopic";
+    public static final String ADD_PROBLEM_ROUTE = CODE_ROUTE_PREFIX + "/addProblem";
+    public static final String CREATE_SUBMISSION_ROUTE = CODE_ROUTE_PREFIX + "/{problemId}/createSubmission";
+    public static final String GET_SUBMISSION_RESULT_ROUTE = CODE_ROUTE_PREFIX + "/{submissionId}/getSubmissionResult";
+
+    // Permitted Routes
+    public static final String[] PUBLIC_ROUTES = {
+            SIGNUP_ROUTE, LOGIN_ROUTE
+    };
+
+    public static final String[] ADMIN_ROUTES = {
+            ADD_COMPANY_ROUTE, ADD_TOPIC_ROUTE, ADD_PROBLEM_ROUTE
+    };
+
+    public static final String[] INSTRUCTOR_ROUTES = {
+            CREATE_CATEGORY_ROUTE,CREATE_COURSE_ROUTE,BANNER_COURSE_ROUTE,CREATE_SECTION_ROUTE,BANNER_SECTION_ROUTE,CREATE_CHAPTER_ROUTE
+    };
+
+
+    // Google OAuth Constants
+    public static final String GOOGLE_OAUTH_EMAIL = "email";
+    public static final String GOOGLE_OAUTH_PROFILEPIC = "picture";
+    public static final String GOOGLE_OAUTH_NAME = "name";
+    public static final String OAUTH_DUMMY_PASSWORD = "dummy";
+
 }

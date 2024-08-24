@@ -48,6 +48,8 @@ public class ChapterService {
     }
 
     public Chapter createChapter(Map<String, String> chapter,String sectionId){
+        Section section = sectionRepository.findById(sectionId).
+                orElseThrow(() -> new RuntimeException("Section not found"));
 
         if(!validateRequestKeys(CHAPTER_CREATE_NOT_NULL_FIELDS, chapter)){
             throw new RuntimeException("Invalid request body, missing required fields");
@@ -86,7 +88,6 @@ public class ChapterService {
 
         newChapter = chapterRepository.save(newChapter);
 
-        Section section = sectionRepository.findByChapterId(newChapter.get_id());
         section.getChapters().add(newChapter);
         sectionRepository.save(section);
 

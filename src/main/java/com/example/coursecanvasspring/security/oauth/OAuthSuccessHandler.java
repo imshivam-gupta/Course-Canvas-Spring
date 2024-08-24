@@ -4,7 +4,6 @@ import com.example.coursecanvasspring.entity.user.Student;
 import com.example.coursecanvasspring.entity.user.User;
 import com.example.coursecanvasspring.enums.AuthProvider;
 import com.example.coursecanvasspring.helper.SecurityFunctions;
-import com.example.coursecanvasspring.helper.StringConstants;
 import com.example.coursecanvasspring.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 
 @Slf4j
@@ -38,12 +39,12 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler{
 
         User user = new Student();
         user.setEmailVerified(true);
-        user.setPassword(SecurityFunctions.passwordEncoder(StringConstants.OUATHUSER_DUMMY_PASSWORD));
+        user.setPassword(SecurityFunctions.passwordEncoder(OAUTH_DUMMY_PASSWORD));
 
         if(authorizedClientRegistrationId.equalsIgnoreCase(AuthProvider.GOOGLE.getProvider())){
-            user.setEmail(Objects.requireNonNull(oauth2User.getAttribute(StringConstants.OAUTHUSER_EMAIL_ATTRIBUTE)).toString());
-            user.setProfilePicture(Objects.requireNonNull(oauth2User.getAttribute(StringConstants.OAUTHUSER_PROFILEPIC_ATTRIBUTE)).toString());
-            user.setName(Objects.requireNonNull(oauth2User.getAttribute(StringConstants.OAUTHUSER_NAME_ATTRIBUTE)).toString());
+            user.setEmail(Objects.requireNonNull(oauth2User.getAttribute(GOOGLE_OAUTH_EMAIL)).toString());
+            user.setProfilePicture(Objects.requireNonNull(oauth2User.getAttribute(GOOGLE_OAUTH_PROFILEPIC)).toString());
+            user.setName(Objects.requireNonNull(oauth2User.getAttribute(GOOGLE_OAUTH_NAME)).toString());
             user.setProviderId(oauth2User.getName());
             user.setOauthProvider(AuthProvider.GOOGLE.getProvider());
         } else{

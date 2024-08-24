@@ -42,6 +42,9 @@ public class CourseService {
             throw new RuntimeException("Invalid request body, missing required fields");
         }
 
+        CourseCategory courseCategory = courseCategoryRepository.findById(reqBody.get(CATEGORY_COURSE_FIELD))
+                .orElseThrow(() -> new RuntimeException("Course category not found"));
+
         Course newCourse = new Course();
         newCourse.setTitle(reqBody.get(TITLE_COURSE_FIELD));
         newCourse.setDescription(reqBody.get(DESCRIPTION_COURSE_FIELD));
@@ -49,6 +52,7 @@ public class CourseService {
         newCourse.setIsPublished(Boolean.valueOf(reqBody.get(PUBLISHED_COURSE_FIELD)));
         newCourse.setIsFree(Boolean.valueOf(reqBody.get(FREE_COURSE_FIELD)));
         newCourse.setDiscount(Double.valueOf(reqBody.get(DISCOUNT_COURSE_FIELD)));
+        newCourse.setCategory(courseCategory);
         newCourse = courseRepository.save(newCourse);
         return newCourse;
     }

@@ -12,34 +12,36 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.example.coursecanvasspring.constants.StringConstants.*;
+
 @RestController
 @Slf4j
-@RequestMapping("/api/course")
+@RequestMapping
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/{courseId}")
+    @GetMapping(GET_COURSE_ROUTE)
     public ResponseEntity<?> getChapter(@PathVariable String courseId) {
         Course course = courseService.getCourse(courseId);
         return ResponseEntity.ok(course);
     }
 
-    @PostMapping("/creatCategory")
+    @PostMapping(CREATE_CATEGORY_ROUTE)
     public ResponseEntity<?> createCourseCategory(@RequestBody Map<String,String> courseCategory){
         CourseCategory createdCourseCategory = courseService.createCourseCategory(courseCategory);
         return ResponseEntity.ok(createdCourseCategory);
     }
 
-    @PostMapping("/create")
+    @PostMapping(CREATE_COURSE_ROUTE)
     public ResponseEntity<?> createCourse(@RequestBody Map<String,String> course){
         Course createdCourse = courseService.createCourse(course);
         return ResponseEntity.ok(createdCourse);
     }
 
-    @PatchMapping("/{courseId}/banner")
-    public ResponseEntity<?> updateCourseBanner(@RequestParam(value = "file", required = true) MultipartFile file, @PathVariable String courseId) throws IOException {
+    @PatchMapping(BANNER_COURSE_ROUTE)
+    public ResponseEntity<?> updateCourseBanner(@RequestParam(value = "file") MultipartFile file, @PathVariable String courseId) throws IOException {
         Course updatedCourse = courseService.addBanner(file,courseId);
         return ResponseEntity.ok(updatedCourse);
     }

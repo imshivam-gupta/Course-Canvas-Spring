@@ -70,12 +70,12 @@ public class UserService {
         if (source.getDiscussions() != null && !source.getDiscussions().isEmpty()) target.setDiscussions(source.getDiscussions());
     }
 
-    public void updateUser(User userUpdate) {
+    public User updateUser(User userUpdate) {
         User existingUser = findUserByEmail()
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         copyNonNullProperties(userUpdate, existingUser);
-        userRepository.save(existingUser);
+        return userRepository.save(existingUser);
     }
 
     public User editProfilePicture(MultipartFile file) throws IOException {

@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
+import static com.example.coursecanvasspring.constants.StringConstants.USER_PROFILE_PICTURE_ROUTE;
+import static com.example.coursecanvasspring.constants.StringConstants.USER_ROUTE;
+
 @RestController
 @Slf4j
-@RequestMapping("/api/user")
+@RequestMapping(USER_ROUTE)
 public class UserController {
 
     @Autowired
@@ -36,10 +39,15 @@ public class UserController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> updateUser(@RequestParam(value = "file", required = false) MultipartFile file,
-                                        @RequestBody User userUpdate) throws IOException {
+    public ResponseEntity<?> updateUser(@RequestBody User userUpdate) throws IOException {
         userService.findUserByEmail().orElseThrow(() -> new RuntimeException("User not found"));
-        userService.updateUser(userUpdate);
+        User updatedUser =  userService.updateUser(userUpdate);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @PatchMapping(USER_PROFILE_PICTURE_ROUTE)
+    public ResponseEntity<?> updateProfilePicture(@RequestParam(value = "file", required = true) MultipartFile file) throws IOException {
+        userService.findUserByEmail().orElseThrow(() -> new RuntimeException("User not found"));
         User updatedUser =  userService.editProfilePicture(file);
         return ResponseEntity.ok(updatedUser);
     }
