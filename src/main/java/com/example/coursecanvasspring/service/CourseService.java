@@ -3,7 +3,7 @@ package com.example.coursecanvasspring.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.example.coursecanvasspring.entity.course.Course;
 import com.example.coursecanvasspring.entity.course.CourseCategory;
-import com.example.coursecanvasspring.entity.section.Section;
+import com.example.coursecanvasspring.repository.course.CourseCategoryRepository;
 import com.example.coursecanvasspring.repository.course.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.example.coursecanvasspring.constants.StringConstants.*;
 import static com.example.coursecanvasspring.helper.RequestValidators.validateRequestKeys;
@@ -40,7 +39,7 @@ public class CourseService {
     public Course createCourse(Map<String,String> reqBody){
 
         if(!validateRequestKeys(COURSE_CREATE_NOT_NULL_FIELDS, reqBody)){
-            return null;
+            throw new RuntimeException("Invalid request body, missing required fields");
         }
 
         Course newCourse = new Course();
@@ -56,7 +55,7 @@ public class CourseService {
 
     public CourseCategory createCourseCategory(Map<String,String> reqBody){
         if(!validateRequestKeys(CATEGORY_CREATE_NOT_NULL_FIELDS, reqBody)){
-            return null;
+            throw new RuntimeException("Invalid request body, missing required fields");
         }
 
         CourseCategory newCourseCategory = new CourseCategory();

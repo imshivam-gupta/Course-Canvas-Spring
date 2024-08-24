@@ -1,5 +1,6 @@
-package com.example.coursecanvasspring.security;
+package com.example.coursecanvasspring.security.oauth;
 
+import com.example.coursecanvasspring.entity.user.Student;
 import com.example.coursecanvasspring.entity.user.User;
 import com.example.coursecanvasspring.enums.AuthProvider;
 import com.example.coursecanvasspring.helper.SecurityFunctions;
@@ -35,11 +36,7 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler{
         String authorizedClientRegistrationId = oauth2AuthenticationToken.getAuthorizedClientRegistrationId();
         DefaultOAuth2User oauth2User = (DefaultOAuth2User) authentication.getPrincipal();
 
-        oauth2User.getAttributes().forEach((key, value) -> {
-            log.info(key + " : " + value);
-        });
-
-        User user = new User();
+        User user = new Student();
         user.setEmailVerified(true);
         user.setPassword(SecurityFunctions.passwordEncoder(StringConstants.OUATHUSER_DUMMY_PASSWORD));
 
@@ -56,7 +53,6 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler{
         User existingUser = userService.findUserByEmail(user.getEmail()).orElse(null);
         if(existingUser == null){
             userService.saveUser(user);
-            log.info("User saved: "+user);
         }
     }
 }

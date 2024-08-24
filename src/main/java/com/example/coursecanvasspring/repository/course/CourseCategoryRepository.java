@@ -1,4 +1,4 @@
-package com.example.coursecanvasspring.service;
+package com.example.coursecanvasspring.repository.course;
 
 import com.example.coursecanvasspring.entity.course.CourseCategory;
 import org.springframework.data.mongodb.repository.MongoRepository;

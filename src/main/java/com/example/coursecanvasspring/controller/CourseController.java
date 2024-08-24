@@ -26,7 +26,7 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
 
-    @PostMapping("/create-category")
+    @PostMapping("/creatCategory")
     public ResponseEntity<?> createCourseCategory(@RequestBody Map<String,String> courseCategory){
         CourseCategory createdCourseCategory = courseService.createCourseCategory(courseCategory);
         return ResponseEntity.ok(createdCourseCategory);

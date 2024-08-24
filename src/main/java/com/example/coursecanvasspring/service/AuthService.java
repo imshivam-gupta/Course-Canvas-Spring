@@ -10,7 +10,7 @@ import com.example.coursecanvasspring.entity.user.UserFactory;
 import com.example.coursecanvasspring.enums.UserRole;
 import com.example.coursecanvasspring.repository.user.StudentRepository;
 import com.example.coursecanvasspring.repository.user.UserRepository;
-import com.example.coursecanvasspring.security.JWTProvider;
+import com.example.coursecanvasspring.security.local.JWTProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -19,6 +19,7 @@ public class StringConstants {
     public static final String SUBMISSION_COLLECTION = "Submission";
     public static final String TOPIC_COLLECTION = "Topic";
     public static final String USER_COLLECTION = "User";
+    public static final String TRANSACTION_COLLECTION = "Transaction";
 
     // Authentication Strategies
     public static final String LOCAL_STRATEGY = "LOCAL";
@@ -32,6 +33,12 @@ public class StringConstants {
     public static final String INSTRUCTOR_ROLE = "INSTRUCTOR";
     public static final String STUDENT_ROLE = "STUDENT";
     public static final String ASSISTANT_ROLE = "ASSISTANT";
+
+    // SUBMISSION STATUS
+    public static final String SUBMISSION_STATUS_PENDING = "PENDING";
+    public static final String SUBMISSION_STATUS_ACCEPTED = "ACCEPTED";
+    public static final String SUBMISSION_STATUS_REJECTED = "REJECTED";
+
 
     // Chapter Fields
     public static final String TITLE_CHAPTER_FIELD = "title";
@@ -84,4 +91,56 @@ public class StringConstants {
 
     // Necessary Fields
     public static final String[] COURSE_CREATE_NOT_NULL_FIELDS = {TITLE_COURSE_FIELD,DESCRIPTION_COURSE_FIELD,PRICE_COURSE_FIELD,PUBLISHED_COURSE_FIELD,FREE_COURSE_FIELD};
+
+    // Company Fields
+    public static final String NAME_COMPANY_FIELD = "name";
+
+    // Necessary Fields
+    public static final String[] COMPANY_CREATE_NOT_NULL_FIELDS = {NAME_COMPANY_FIELD};
+
+    // Topic Fields
+    public static final String TITLE_TOPIC_FIELD = "title";
+    public static final String DESCRIPTION_TOPIC_FIELD = "description";
+
+    // Necessary Fields
+    public static final String[] TOPIC_CREATE_NOT_NULL_FIELDS = {TITLE_TOPIC_FIELD};
+
+    // Problem Fields
+    public static final String TITLE_PROBLEM_FIELD = "title";
+    public static final String DESCRIPTION_PROBLEM_FIELD = "descriptionUrl";
+    public static final String DIFFICULTY_PROBLEM_FIELD = "difficulty";
+    public static final String HINTS_PROBLEM_FIELD = "hints";
+    public static final String EDITORIAL_PROBLEM_FIELD = "editorialUrl";
+    public static final String SUPPORTED_LANGUAGES_PROBLEM_FIELD = "supportedLanguages";
+    public static final String RELATED_PROBLEMS_PROBLEM_FIELD = "relatedProblems";
+    public static final String TOPICS_PROBLEM_FIELD = "topics";
+    public static final String COMPANIES_PROBLEM_FIELD = "companies";
+
+    // Necessary Fields
+    public static final String[] PROBLEM_CREATE_NOT_NULL_FIELDS = {TITLE_PROBLEM_FIELD,DESCRIPTION_PROBLEM_FIELD,DIFFICULTY_PROBLEM_FIELD};
+
+    // Submission Fields
+    public static final String CODE_SUBMISSION_FIELD = "code";
+    public static final String LANGUAGE_SUBMISSION_FIELD = "language";
+    public static final String STATUS_SUBMISSION_FIELD = "status";
+    public static final String TOKENS_SUBMISSION_FIELD = "tokens";
+    public static final String TEST_CASES_SUBMISSION_FIELD = "testCases";
+
+    // Necessary Fields
+    public static final String[] SUBMISSION_CREATE_NOT_NULL_FIELDS = {CODE_SUBMISSION_FIELD,LANGUAGE_SUBMISSION_FIELD};
+
+    // Request Body Keys
+    public static final String STDIN_KEY = "stdin";
+    public static final String EXPECTED_OUTPUT_KEY = "expectedOutput";
+
+    // Response Body Keys
+    public static final String SUBMISSION_TOKEN_KEY = "token";
+
+    // Error Messages
+    public static final String INVALID_REQUEST_MISSING_REQUIRED_FIELDS = "Invalid request missing required fields";
+
+    // S3 Paths
+    public static final String PROBLEM_OUTPUT_PATH = "problems/%s/tests/outputs/";
+    public static final String PROBLEM_INPUT_PATH = "problems/%s/tests/inputs/";
+    public static final String BOILERPLATE_PATH = "problems/%s/boilerplate-full/function.%s";
 }

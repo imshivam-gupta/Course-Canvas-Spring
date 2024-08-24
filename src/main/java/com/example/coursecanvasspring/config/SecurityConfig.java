@@ -1,10 +1,10 @@
 package com.example.coursecanvasspring.config;
 
 import com.example.coursecanvasspring.helper.StringConstants;
-import com.example.coursecanvasspring.security.JWTFilter;
-import com.example.coursecanvasspring.security.OAuthFailureHandler;
-import com.example.coursecanvasspring.security.OAuthSuccessHandler;
-import com.example.coursecanvasspring.service.UserDetailsServiceImpl;
+import com.example.coursecanvasspring.security.local.JWTFilter;
+import com.example.coursecanvasspring.security.oauth.OAuthFailureHandler;
+import com.example.coursecanvasspring.security.oauth.OAuthSuccessHandler;
+import com.example.coursecanvasspring.security.UserDetailsServiceImplementation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailService;
+    private final UserDetailsServiceImplementation userDetailService;
 
     private final OAuthSuccessHandler successHandler;
 
@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     private final JWTFilter jwtFilter;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailService, OAuthSuccessHandler successHandler, OAuthFailureHandler authFailureHandler, JWTFilter jwtFilter) {
+    public SecurityConfig(UserDetailsServiceImplementation userDetailService, OAuthSuccessHandler successHandler, OAuthFailureHandler authFailureHandler, JWTFilter jwtFilter) {
         this.userDetailService = userDetailService;
         this.successHandler = successHandler;
         this.authFailureHandler = authFailureHandler;

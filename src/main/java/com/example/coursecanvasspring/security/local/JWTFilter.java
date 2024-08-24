@@ -1,4 +1,4 @@
-package com.example.coursecanvasspring.security;
+package com.example.coursecanvasspring.security.local;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component

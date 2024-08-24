@@ -1,4 +1,4 @@
-package com.example.coursecanvasspring.security;
+package com.example.coursecanvasspring.security.oauth;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,9 +21,9 @@ public class OAuthFailureHandler implements AuthenticationFailureHandler {
         if(exception instanceof DisabledException){
             HttpSession session = request.getSession();
             session.setAttribute("message", "User is disabled, Email with verification link is sent on your email id !!");
-            response.sendRedirect("/login");
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } else{
-            response.sendRedirect("/login?error=true");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }

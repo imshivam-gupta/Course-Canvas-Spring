@@ -1,4 +1,4 @@
-package com.example.coursecanvasspring.security;
+package com.example.coursecanvasspring.security.local;
 
 import com.example.coursecanvasspring.entity.user.User;
 import io.jsonwebtoken.Jwts;

@@ -50,7 +50,7 @@ public class ChapterService {
     public Chapter createChapter(Map<String, String> chapter,String sectionId){
 
         if(!validateRequestKeys(CHAPTER_CREATE_NOT_NULL_FIELDS, chapter)){
-            return null;
+            throw new RuntimeException("Invalid request body, missing required fields");
         }
 
         Chapter newChapter = switch (chapter.get(CONTENT_TYPE_CHAPTER_FIELD)) {
@@ -67,13 +67,13 @@ public class ChapterService {
 
         if(newChapter instanceof DocumentChapter documentChapter){
             if(!validateRequestKeys(DOC_CHAPTER_CREATE_NOT_NULL_FIELDS, chapter)){
-                return null;
+                throw new RuntimeException("Invalid request body, missing required fields");
             }
 
             documentChapter.setArticleUrl(chapter.get(ARTICLE_URL_CHAPTER_FIELD));
         } else if(newChapter instanceof VideoChapter videoChapter){
             if(!validateRequestKeys(VIDEO_CHAPTER_CREATE_NOT_NULL_FIELDS, chapter)){
-                return null;
+                throw new RuntimeException("Invalid request body, missing required fields");
             }
 
             videoChapter.setVideoUrl(chapter.get(VIDEO_URL_CHAPTER_FIELD));
