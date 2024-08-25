@@ -45,4 +45,16 @@ public class CourseController {
         Course updatedCourse = courseService.addBanner(file,courseId);
         return ResponseEntity.ok(updatedCourse);
     }
+
+    @PatchMapping(UPDATE_COURSE_ROUTE)
+    public ResponseEntity<?> updateCourse(@RequestBody Map<String,String> courseUpdate, @PathVariable String courseId){
+        Course updatedCourse = courseService.updateCourse(courseUpdate,courseId);
+        return ResponseEntity.ok(updatedCourse);
+    }
+
+    @PatchMapping(PUBLISH_COURSE_ROUTE)
+    public ResponseEntity<?> publishCourse(@PathVariable String courseId){
+        Course updatedCourse = courseService.publishCourse(courseId);
+        return ResponseEntity.ok(updatedCourse);
+    }
 }

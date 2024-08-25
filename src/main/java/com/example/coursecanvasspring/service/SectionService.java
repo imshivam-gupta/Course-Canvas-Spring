@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,6 +61,13 @@ public class SectionService {
         return newSection;
     }
 
+    private void copyNonNullProperties(Map<String,String> source, Section target) {
+        if(source.get(TITLE_SECTION_FIELD) != null) target.setTitle(source.get(TITLE_SECTION_FIELD));
+        if(source.get(DESCRIPTION_SECTION_FIELD) != null) target.setDescription(source.get(DESCRIPTION_SECTION_FIELD));
+        if(source.get(PUBLISHED_SECTION_FIELD) != null) target.setIsPublished(Boolean.valueOf(source.get(PUBLISHED_SECTION_FIELD)));
+        if(source.get(FREE_SECTION_FIELD) != null) target.setIsFree(Boolean.valueOf(source.get(FREE_SECTION_FIELD)));
+    }
+
     public Section addBanner(MultipartFile file, String sectionId) throws RuntimeException, IOException {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
@@ -75,5 +83,50 @@ public class SectionService {
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         return course.getSections().size() + 1L;
+    }
+
+    public Section updateSection(Map<String,String> sectionUpdate, String sectionId){
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+
+        copyNonNullProperties(sectionUpdate, section);
+        sectionRepository.save(section);
+        return section;
+    }
+
+    public Section publishSection(String sectionId){
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+
+        for(String fieldName : SECTION_PUBLISH_NOT_NULL_FIELDS) {
+            try {
+                Field field = section.getClass().getDeclaredField(fieldName);
+                field.setAccessible(true);
+                Object value = field.get(section);
+                if (value == null) {
+                    throw new RuntimeException("Section field: " + fieldName + " cannot be null");
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException("Section field: " + fieldName + " cannot be null");
+            }
+        }
+
+        // At least one chapter should be present and published
+        if(section.getChapters().isEmpty()){
+            throw new RuntimeException("Section should have at least one chapter");
+        }
+
+        for(int i=0; i<section.getChapters().size(); i++){
+            if(section.getChapters().get(i).getIsPublished()){
+                break;
+            }
+            if(i == section.getChapters().size()-1){
+                throw new RuntimeException("Section should have at least one published chapter");
+            }
+        }
+
+        section.setIsPublished(true);
+        sectionRepository.save(section);
+        return section;
     }
 }

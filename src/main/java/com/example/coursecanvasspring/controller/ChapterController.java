@@ -30,4 +30,16 @@ public class ChapterController {
         Chapter createdChapter = chapterService.createChapter(chapter,sectionId);
         return ResponseEntity.ok(createdChapter);
     }
+
+    @PatchMapping(UPDATE_CHAPTER_ROUTE)
+    public ResponseEntity<?> updateChapter(@RequestBody Map<String,String> chapterUpdate, @PathVariable String chapterId){
+        Chapter updatedChapter = chapterService.updateChapter(chapterUpdate,chapterId);
+        return ResponseEntity.ok(updatedChapter);
+    }
+
+    @PatchMapping(PUBLISH_CHAPTER_ROUTE)
+    public ResponseEntity<?> publishChapter(@PathVariable String chapterId){
+        Chapter publishedChapter = chapterService.publishChapter(chapterId);
+        return ResponseEntity.ok(publishedChapter);
+    }
 }

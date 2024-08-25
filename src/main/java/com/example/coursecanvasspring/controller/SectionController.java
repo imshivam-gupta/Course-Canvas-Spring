@@ -1,5 +1,6 @@
 package com.example.coursecanvasspring.controller;
 
+import com.example.coursecanvasspring.entity.course.Course;
 import com.example.coursecanvasspring.entity.section.Section;
 import com.example.coursecanvasspring.service.SectionService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +37,17 @@ public class SectionController {
     public ResponseEntity<?> updateSectionBanner(@RequestParam(value = "file") MultipartFile file, @PathVariable String sectionId) throws IOException {
         Section updatedSection = sectionService.addBanner(file,sectionId);
         return ResponseEntity.ok(updatedSection);
+    }
+
+    @PatchMapping(UPDATE_SECTION_ROUTE)
+    public ResponseEntity<?> updateCourse(@RequestBody Map<String,String> courseUpdate, @PathVariable String sectionId){
+        Section updatedSection = sectionService.updateSection(courseUpdate,sectionId);
+        return ResponseEntity.ok(updatedSection);
+    }
+
+    @PatchMapping(PUBLISH_SECTION_ROUTE)
+    public ResponseEntity<?> publishCourse(@PathVariable String sectionId){
+        Section publishedSection = sectionService.publishSection(sectionId);
+        return ResponseEntity.ok(publishedSection);
     }
 }

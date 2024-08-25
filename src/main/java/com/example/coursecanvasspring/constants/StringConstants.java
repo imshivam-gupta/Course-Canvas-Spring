@@ -56,6 +56,9 @@ public class StringConstants {
     public static final String[] DOC_CHAPTER_CREATE_NOT_NULL_FIELDS = {ARTICLE_URL_CHAPTER_FIELD};
     public static final String[] VIDEO_CHAPTER_CREATE_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD,DURATION_CHAPTER_FIELD,THUMBNAIL_URL_CHAPTER_FIELD};
 
+    public static final String[] DOC_CHAPTER_PUBLISH_NOT_NULL_FIELDS = {ARTICLE_URL_CHAPTER_FIELD};
+    public static final String[] VIDEO_CHAPTER_PUBLISH_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD,DURATION_CHAPTER_FIELD,THUMBNAIL_URL_CHAPTER_FIELD};
+
     // Section Fields
     public static final String TITLE_SECTION_FIELD = "title";
     public static final String DESCRIPTION_SECTION_FIELD = "description";
@@ -67,6 +70,7 @@ public class StringConstants {
 
    // Necessary Fields
     public static final String[] SECTION_CREATE_NOT_NULL_FIELDS = {TITLE_SECTION_FIELD};
+    public static final String[] SECTION_PUBLISH_NOT_NULL_FIELDS = {TITLE_SECTION_FIELD,BANNER_URL_SECTION_FIELD,POSITION_SECTION_FIELD};
 
     // Course Category Fields
     public static final String NAME_CATEGORY_FIELD = "name";
@@ -87,6 +91,7 @@ public class StringConstants {
 
     // Necessary Fields
     public static final String[] COURSE_CREATE_NOT_NULL_FIELDS = {TITLE_COURSE_FIELD,DESCRIPTION_COURSE_FIELD,PRICE_COURSE_FIELD,PUBLISHED_COURSE_FIELD,FREE_COURSE_FIELD,CATEGORY_COURSE_FIELD};
+    public static final String[] COURSE_PUBLISH_NOT_NULL_FIELDS = {TITLE_COURSE_FIELD,DESCRIPTION_COURSE_FIELD,BANNER_URL_COURSE_FIELD,CATEGORY_COURSE_FIELD};
 
     // Company Fields
     public static final String NAME_COMPANY_FIELD = "name";
@@ -160,12 +165,17 @@ public class StringConstants {
     public static final String CHAPTER_ROUTE_PREFIX = API_PREFIX + "/chapter";
     public static final String GET_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}";
     public static final String CREATE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/create";
+    public static final String UPDATE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}/update";
+    public static final String PUBLISH_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}/publish";
 
     // Section Routes
     public static final String SECTION_ROUTE_PREFIX = API_PREFIX + "/section";
     public static final String GET_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}";
     public static final String CREATE_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{courseId}/create";
     public static final String BANNER_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/banner";
+    public static final String UPDATE_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/update";
+    public static final String PUBLISH_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/publish";
+
 
     // Course Routes
     public static final String COURSE_ROUTE_PREFIX = API_PREFIX + "/course";
@@ -173,6 +183,8 @@ public class StringConstants {
     public static final String CREATE_CATEGORY_ROUTE = COURSE_ROUTE_PREFIX + "/createCategory";
     public static final String CREATE_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/create";
     public static final String BANNER_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/banner";
+    public static final String UPDATE_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/update";
+    public static final String PUBLISH_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/publish";
 
     // Code Routes
     public static final String CODE_ROUTE_PREFIX = API_PREFIX + "/code";

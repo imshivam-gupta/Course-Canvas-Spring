@@ -11,6 +11,7 @@ import com.example.coursecanvasspring.repository.section.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 import static com.example.coursecanvasspring.constants.StringConstants.*;
@@ -92,6 +93,66 @@ public class ChapterService {
         sectionRepository.save(section);
 
         return newChapter;
+    }
+
+    private void copyNonNullProperties(Map<String,String> source, Chapter target) {
+        if(source.get(TITLE_CHAPTER_FIELD) != null) target.setTitle(source.get(TITLE_CHAPTER_FIELD));
+        if(source.get(DESCRIPTION_CHAPTER_FIELD) != null) target.setDescription(source.get(DESCRIPTION_CHAPTER_FIELD));
+        if(source.get(PUBLISHED_CHAPTER_FIELD) != null) target.setIsPublished(Boolean.parseBoolean(source.get(PUBLISHED_CHAPTER_FIELD)));
+        if(source.get(FREE_CHAPTER_FIELD) != null) target.setIsFree(Boolean.parseBoolean(source.get(FREE_CHAPTER_FIELD)));
+    }
+
+    public Chapter updateChapter(Map<String,String> chapterUpdate, String chapterId){
+        Chapter chapter = chapterRepository.findById(chapterId).
+                orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+        copyNonNullProperties(chapterUpdate, chapter);
+        chapterRepository.save(chapter);
+        return chapter;
+    }
+
+    public Chapter publishChapter(String chapterId){
+        Chapter chapter = chapterRepository.findById(chapterId).
+                orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+        if(chapter.getTitle() == null || chapter.getContentType() == null){
+            throw new RuntimeException("Chapter title and content type cannot be null");
+        }
+
+        switch (chapter.getContentType()) {
+            case CHAPTER_TYPE_DOCUMENT -> {
+                for(String fieldName : DOC_CHAPTER_PUBLISH_NOT_NULL_FIELDS) {
+                    try {
+                        Field field = chapter.getClass().getDeclaredField(fieldName);
+                        field.setAccessible(true);
+                        Object value = field.get(chapter);
+                        if (value == null) {
+                            throw new RuntimeException("Document Chapter field: " + fieldName + " cannot be null");
+                        }
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        throw new RuntimeException("Document Chapter field: " + fieldName + " cannot be null");
+                    }
+                }
+            }
+            case CHAPTER_TYPE_VIDEO -> {
+                for(String fieldName : VIDEO_CHAPTER_PUBLISH_NOT_NULL_FIELDS) {
+                    try {
+                        Field field = chapter.getClass().getDeclaredField(fieldName);
+                        field.setAccessible(true);
+                        Object value = field.get(chapter);
+                        if (value == null) {
+                            throw new RuntimeException("Video Chapter field: " + fieldName + " cannot be null");
+                        }
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        throw new RuntimeException("Video Chapter field: " + fieldName + " cannot be null");
+                    }
+                }
+            }
+        }
+
+        chapter.setIsPublished(true);
+        chapterRepository.save(chapter);
+        return chapter;
     }
 
     private Long getLastChapterPosition(String sectionId) throws RuntimeException{
