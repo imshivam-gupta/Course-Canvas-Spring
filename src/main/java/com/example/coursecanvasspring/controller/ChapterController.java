@@ -1,6 +1,7 @@
 package com.example.coursecanvasspring.controller;
 
 import com.example.coursecanvasspring.entity.chapter.Chapter;
+import com.example.coursecanvasspring.entity.section.Section;
 import com.example.coursecanvasspring.service.ChapterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,23 @@ public class ChapterController {
         Chapter publishedChapter = chapterService.publishChapter(chapterId);
         return ResponseEntity.ok(publishedChapter);
     }
+
+    @DeleteMapping(DELETE_CHAPTER_ROUTE)
+    public ResponseEntity<?> deleteChapter(@PathVariable String chapterId, @PathVariable String sectionId){
+        chapterService.deleteChapter(chapterId,sectionId);
+        return ResponseEntity.ok("Chapter deleted successfully");
+    }
+
+    @PatchMapping(UNPUBLISH_CHAPTER_ROUTE)
+    public ResponseEntity<?> unpublishChapter(@PathVariable String chapterId, @PathVariable String sectionId){
+        Chapter unpublishedChapter = chapterService.unpublishChapter(chapterId,sectionId);
+        return ResponseEntity.ok(unpublishedChapter);
+    }
+
+    @PatchMapping(REORDER_CHAPTER_ROUTE)
+    public ResponseEntity<?> reorderChapter(@RequestBody Map<String,Long> chapterOrder, @PathVariable String sectionId){
+        Section reorderedSection = chapterService.reorderChapter(sectionId, chapterOrder);
+        return ResponseEntity.ok(reorderedSection);
+    }
+
 }

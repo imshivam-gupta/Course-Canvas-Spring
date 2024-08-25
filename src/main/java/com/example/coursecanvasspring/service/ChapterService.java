@@ -155,6 +155,57 @@ public class ChapterService {
         return chapter;
     }
 
+    public Chapter unpublishChapter(String chapterId,String sectionId){
+        Chapter chapter = chapterRepository.findById(chapterId).
+                orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+        chapter.setIsPublished(false);
+        chapterRepository.save(chapter);
+
+        Section section = sectionRepository.findById(sectionId).
+                orElseThrow(() -> new RuntimeException("Section not found"));
+
+        if(section.getIsPublished()){
+            // check if no chapter in section is published then set section to unpublished
+            boolean isSectionPublished = section.getChapters().stream().anyMatch(Chapter::getIsPublished);
+            if(!isSectionPublished){
+                section.setIsPublished(false);
+                sectionRepository.save(section);
+            }
+        }
+
+        return chapter;
+    }
+
+    public void deleteChapter(String chapterId,String sectionId){
+        Chapter chapter = chapterRepository.findById(chapterId).
+                orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+        chapterRepository.delete(chapter);
+
+        Section section = sectionRepository.findById(sectionId).
+                orElseThrow(() -> new RuntimeException("Section not found"));
+
+        section.getChapters().remove(chapter);
+        sectionRepository.save(section);
+    }
+
+    public Section reorderChapter(String sectionId,Map<String,Long> chapterOrder){
+        Section section = sectionRepository.findById(sectionId).
+                orElseThrow(() -> new RuntimeException("Section not found"));
+
+        for(Map.Entry<String,Long> entry : chapterOrder.entrySet()){
+            Chapter chapter = chapterRepository.findById(entry.getKey()).
+                    orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+            chapter.setPosition(entry.getValue());
+            chapterRepository.save(chapter);
+        }
+
+        section.getChapters().sort((c1,c2) -> (int) (c1.getPosition() - c2.getPosition()));
+        return sectionRepository.save(section);
+    }
+
     private Long getLastChapterPosition(String sectionId) throws RuntimeException{
         Section section = sectionRepository.findById(sectionId).
                 orElseThrow(() -> new RuntimeException("Section not found"));

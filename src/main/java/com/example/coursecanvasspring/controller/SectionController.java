@@ -50,4 +50,22 @@ public class SectionController {
         Section publishedSection = sectionService.publishSection(sectionId);
         return ResponseEntity.ok(publishedSection);
     }
+
+    @DeleteMapping(DELETE_SECTION_ROUTE)
+    public ResponseEntity<?> deleteCourse(@PathVariable String sectionId, @PathVariable String courseId){
+        sectionService.deleteSection(sectionId,courseId);
+        return ResponseEntity.ok("Section deleted successfully");
+    }
+
+    @PatchMapping(UNPUBLISH_SECTION_ROUTE)
+    public ResponseEntity<?> unpublishCourse(@PathVariable String sectionId, @PathVariable String courseId){
+        Section unpublishedSection = sectionService.unpublishSection(sectionId,courseId);
+        return ResponseEntity.ok(unpublishedSection);
+    }
+
+    @PatchMapping(REORDER_SECTION_ROUTE)
+    public ResponseEntity<?> reorderSection(@RequestBody Map<String,Long> reqBody, @PathVariable String courseId){
+        Course reorderedCourse = sectionService.reorderSection(courseId, reqBody);
+        return ResponseEntity.ok(reorderedCourse);
+    }
 }

@@ -167,6 +167,9 @@ public class StringConstants {
     public static final String CREATE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/create";
     public static final String UPDATE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}/update";
     public static final String PUBLISH_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{chapterId}/publish";
+    public static final String DELETE_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/{chapterId}/delete";
+    public static final String UNPUBLISH_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/{chapterId}/unpublish";
+    public static final String REORDER_CHAPTER_ROUTE = CHAPTER_ROUTE_PREFIX + "/{sectionId}/reorder";
 
     // Section Routes
     public static final String SECTION_ROUTE_PREFIX = API_PREFIX + "/section";
@@ -175,7 +178,9 @@ public class StringConstants {
     public static final String BANNER_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/banner";
     public static final String UPDATE_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/update";
     public static final String PUBLISH_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{sectionId}/publish";
-
+    public static final String DELETE_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{courseId}/{sectionId}/delete";
+    public static final String UNPUBLISH_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{courseId}/{sectionId}/unpublish";
+    public static final String REORDER_SECTION_ROUTE = SECTION_ROUTE_PREFIX + "/{courseId}/reorder";
 
     // Course Routes
     public static final String COURSE_ROUTE_PREFIX = API_PREFIX + "/course";

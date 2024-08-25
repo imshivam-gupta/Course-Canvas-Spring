@@ -1,8 +1,10 @@
 package com.example.coursecanvasspring.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.example.coursecanvasspring.entity.chapter.Chapter;
 import com.example.coursecanvasspring.entity.course.Course;
 import com.example.coursecanvasspring.entity.course.CourseCategory;
+import com.example.coursecanvasspring.entity.section.Section;
 import com.example.coursecanvasspring.entity.user.User;
 import com.example.coursecanvasspring.repository.course.CourseCategoryRepository;
 import com.example.coursecanvasspring.repository.course.CourseRepository;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Comparator;
 import java.util.Map;
 
 import static com.example.coursecanvasspring.constants.StringConstants.*;
@@ -38,7 +41,13 @@ public class CourseService {
     private AuthorizationService authorizationService;
 
     public Course getCourse(String courseId){
-        return courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
+        course.getSections().sort(Comparator.comparingLong(Section::getPosition));
+        course.getSections().forEach(section ->
+                section.getChapters().sort(Comparator.comparingLong(Chapter::getPosition))
+        );
+
+        return course;
     }
 
     public Course createCourse(Map<String,String> reqBody){
@@ -148,5 +157,4 @@ public class CourseService {
         existingCourse.setIsPublished(true);
         return courseRepository.save(existingCourse);
     }
-
 }

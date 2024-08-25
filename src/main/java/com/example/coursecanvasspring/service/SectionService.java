@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.example.coursecanvasspring.constants.StringConstants.*;
 import static com.example.coursecanvasspring.helper.RequestValidators.validateRequestKeys;
@@ -111,7 +110,6 @@ public class SectionService {
             }
         }
 
-        // At least one chapter should be present and published
         if(section.getChapters().isEmpty()){
             throw new RuntimeException("Section should have at least one chapter");
         }
@@ -128,5 +126,54 @@ public class SectionService {
         section.setIsPublished(true);
         sectionRepository.save(section);
         return section;
+    }
+
+    public Section unpublishSection(String sectionId, String courseId){
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+
+        section.setIsPublished(false);
+        sectionRepository.save(section);
+
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        if(course.getIsPublished()){
+            boolean isCoursePublished = course.getSections().stream().anyMatch(Section::getIsPublished);
+            if(!isCoursePublished){
+                course.setIsPublished(false);
+                courseRepository.save(course);
+            }
+        }
+
+        return section;
+    }
+
+    public void deleteSection(String sectionId, String courseId){
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+
+        sectionRepository.delete(section);
+
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        course.getSections().remove(section);
+        courseRepository.save(course);
+    }
+
+    public Course reorderSection(String courseId, Map<String,Long> sectionOrder){
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        for(Map.Entry<String,Long> entry : sectionOrder.entrySet()){
+            Section section = sectionRepository.findById(entry.getKey())
+                    .orElseThrow(() -> new RuntimeException("Section not found"));
+            section.setPosition(entry.getValue());
+            sectionRepository.save(section);
+        }
+
+        course.getSections().sort((s1,s2) -> (int) (s1.getPosition() - s2.getPosition()));
+        return courseRepository.save(course);
     }
 }
