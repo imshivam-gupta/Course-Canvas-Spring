@@ -20,6 +20,10 @@ public class StringConstants {
     public static final String TOPIC_COLLECTION = "Topic";
     public static final String USER_COLLECTION = "User";
     public static final String TRANSACTION_COLLECTION = "Transaction";
+    public static final String ORDER_COLLECTION = "Order";
+    public static final String COUPON_COLLECTION = "Coupon";
+    public static final String ENROLLED_COURSE_COLLECTION = "EnrolledCourse";
+
 
     // Authentication Strategies
     public static final String LOCAL_STRATEGY = "LOCAL";
@@ -160,6 +164,7 @@ public class StringConstants {
     // User Routes
     public static final String USER_ROUTE = API_PREFIX + "/user";
     public static final String USER_PROFILE_PICTURE_ROUTE = "/profilePicture";
+    public static final String STUDENT_ENROLLED_COURSES_ROUTE =  "/enrolledCourses";
 
     // Chapter Routes
     public static final String CHAPTER_ROUTE_PREFIX = API_PREFIX + "/chapter";
@@ -198,6 +203,15 @@ public class StringConstants {
     public static final String ADD_PROBLEM_ROUTE = CODE_ROUTE_PREFIX + "/addProblem";
     public static final String CREATE_SUBMISSION_ROUTE = CODE_ROUTE_PREFIX + "/{problemId}/createSubmission";
     public static final String GET_SUBMISSION_RESULT_ROUTE = CODE_ROUTE_PREFIX + "/{submissionId}/getSubmissionResult";
+
+    // Order Routes
+    public static final String ORDER_ROUTE_PREFIX = API_PREFIX + "/order";
+    public static final String CREATE_ORDER_ROUTE = ORDER_ROUTE_PREFIX + "/create";
+    public static final String PAY_ORDER_ROUTE = ORDER_ROUTE_PREFIX + "/{orderId}/pay";
+
+    // Coupon Routes
+    public static final String COUPON_ROUTE_PREFIX = API_PREFIX + "/coupon";
+    public static final String CREATE_COUPON_ROUTE = COUPON_ROUTE_PREFIX + "/create";
 
     // Permitted Routes
     public static final String[] PUBLIC_ROUTES = {

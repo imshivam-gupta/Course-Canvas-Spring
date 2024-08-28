@@ -1,9 +1,14 @@
 package com.example.coursecanvasspring.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.example.coursecanvasspring.entity.course.Course;
+import com.example.coursecanvasspring.entity.course.EnrolledCourse;
+import com.example.coursecanvasspring.entity.payment.Order;
 import com.example.coursecanvasspring.entity.user.Student;
 import com.example.coursecanvasspring.entity.user.Teacher;
 import com.example.coursecanvasspring.entity.user.User;
+import com.example.coursecanvasspring.enums.UserRole;
+import com.example.coursecanvasspring.repository.course.EnrolledCourseRepository;
 import com.example.coursecanvasspring.repository.user.StudentRepository;
 import com.example.coursecanvasspring.repository.user.TeacherRepository;
 import com.example.coursecanvasspring.repository.user.UserRepository;
@@ -13,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -29,6 +35,9 @@ public class UserService {
 
     @Autowired
     private AuthorizationService authorizationService;
+
+    @Autowired
+    private EnrolledCourseRepository enrolledCourseRepository;
 
     @Value("${aws.s3.bucket}")
     private String BUCKET_NAME;
@@ -89,6 +98,22 @@ public class UserService {
         }
 
         return userRepository.save(existingUser);
+    }
+
+    public void addUserCourses(Order order){
+        User currentUser = order.getUser();
+        if(currentUser.getRole().equals(UserRole.STUDENT)){
+            Student student = studentRepository.findById(currentUser.get_id())
+                    .orElseThrow(() -> new RuntimeException("Student not found"));
+            for(Course course: order.getCourses()){
+                EnrolledCourse enrolledCourse = new EnrolledCourse();
+                enrolledCourse.setCourse(course);
+                enrolledCourse.setStartDate(LocalDateTime.now());
+                enrolledCourse = enrolledCourseRepository.save(enrolledCourse);
+                student.getEnrolledCourses().add(enrolledCourse);
+            }
+            studentRepository.save(student);
+        }
     }
 
     public void saveUser(User user) {

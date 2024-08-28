@@ -2,6 +2,7 @@ package com.example.coursecanvasspring.controller;
 
 import com.example.coursecanvasspring.entity.user.*;
 import com.example.coursecanvasspring.enums.UserRole;
+import com.example.coursecanvasspring.service.AuthorizationService;
 import com.example.coursecanvasspring.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.*;
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
-import static com.example.coursecanvasspring.constants.StringConstants.USER_PROFILE_PICTURE_ROUTE;
-import static com.example.coursecanvasspring.constants.StringConstants.USER_ROUTE;
+import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 @RestController
 @Slf4j
@@ -20,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorizationService authorizationService;
 
     @GetMapping
     public ResponseEntity<?> getUser() {
@@ -51,4 +53,17 @@ public class UserController {
         User updatedUser =  userService.editProfilePicture(file);
         return ResponseEntity.ok(updatedUser);
     }
+
+    @GetMapping(STUDENT_ENROLLED_COURSES_ROUTE)
+    public ResponseEntity<?> getStudentEnrolledCourses() {
+        User currentUser = authorizationService.getLoggedInUser();
+        if(currentUser.getRole() != UserRole.STUDENT) {
+            throw new RuntimeException("User is not a student");
+        }
+
+        Student student = userService.findStudentByEmail(currentUser.getEmail())
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        return ResponseEntity.ok(student.getEnrolledCourses());
+    }
+
 }

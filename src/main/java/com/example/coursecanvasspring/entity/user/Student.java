@@ -1,6 +1,7 @@
 package com.example.coursecanvasspring.entity.user;
 
 import com.example.coursecanvasspring.entity.course.Course;
+import com.example.coursecanvasspring.entity.course.EnrolledCourse;
 import com.example.coursecanvasspring.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class Student extends User{
     private List<Course> completedCourses = new ArrayList<>();
 
     @DBRef
-    private List<Course> enrolledCourses = new ArrayList<>();
+    private List<EnrolledCourse> enrolledCourses = new ArrayList<>();
 
     @DBRef
     private List<Course> wishlist = new ArrayList<>();
