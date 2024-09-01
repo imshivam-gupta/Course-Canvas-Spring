@@ -18,7 +18,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import static com.example.coursecanvasspring.constants.StringConstants.*;
 import static com.example.coursecanvasspring.helper.RequestValidators.validateRequestKeys;
 import static com.example.coursecanvasspring.helper.S3UploadHelper.*;
@@ -203,9 +203,40 @@ public class CodeService {
         return new ProblemInternal(problemName, fullBoilerplateCode, inputs, outputs);
     }
 
+    public List<BoilerplateCode> getBoilerplateCodes(String problemId) {
+        List<String> languageIds = Arrays.asList("cpp", "java", "js","rs","py");
+        List<BoilerplateCode> boilerplateCodes = new ArrayList<>();
+
+        for (String languageId : languageIds) {
+            try {
+                String fullBoilerplateCode = getProblemBoilerplateCode(problemId, languageId);
+                boilerplateCodes.add(new BoilerplateCode(fullBoilerplateCode, languageId));
+            } catch (IOException e) {
+                System.out.println("Error fetching boilerplate code for language: " + languageId);
+            }
+        }
+
+        return boilerplateCodes;
+    }
+
     private String getProblemFullBoilerplateCode(String problemId, String languageId) throws IOException {
-        String key = String.format(BOILERPLATE_PATH, problemId, languageId);
+        try{
+        String key = String.format(BOILERPLATE_PATH_FULL, problemId, languageId);
         return readS3ObjectAsString(key, amazonS3, bucketName);
+        } catch (Exception e) {
+            System.out.println("Error fetching boilerplate code for language: " + languageId);
+        }
+        return "";
+    }
+
+    private String getProblemBoilerplateCode(String problemId, String languageId) throws IOException {
+        try{
+            String key = String.format(BOILERPLATE_PATH, problemId, languageId);
+            return readS3ObjectAsString(key, amazonS3, bucketName);
+        } catch (Exception e) {
+            System.out.println("Error fetching boilerplate code for language: " + languageId);
+        }
+        return "";
     }
 
     private List<String> getProblemInputs(String problemName) throws IOException {

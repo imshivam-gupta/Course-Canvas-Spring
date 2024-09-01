@@ -1,14 +1,18 @@
 package com.example.coursecanvasspring.service;
 
 import com.example.coursecanvasspring.entity.chapter.Chapter;
+import com.example.coursecanvasspring.entity.chapter.CodeChapter;
 import com.example.coursecanvasspring.entity.chapter.DocumentChapter;
 import com.example.coursecanvasspring.entity.chapter.VideoChapter;
+import com.example.coursecanvasspring.entity.code.Problem;
 import com.example.coursecanvasspring.entity.section.Section;
 import com.example.coursecanvasspring.repository.chapter.ChapterRepository;
 import com.example.coursecanvasspring.repository.chapter.DocumentRepository;
 import com.example.coursecanvasspring.repository.chapter.VideoRepository;
+import com.example.coursecanvasspring.repository.code.ProblemRepository;
 import com.example.coursecanvasspring.repository.section.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -32,7 +36,15 @@ public class ChapterService {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private ProblemRepository problemRepository;
+
+    @Autowired
+    private CodeService codeService;
+
+    @Cacheable(value = "chapter", key = "#chapterId")
     public Chapter getChapter(String chapterId) {
+        System.out.println("ChapterService.getChapter was called");
         Chapter chapter = chapterRepository.findById(chapterId).orElse(null);
 
         if (chapter == null) {
@@ -42,9 +54,14 @@ public class ChapterService {
         return switch (chapter.getContentType()) {
             case CHAPTER_TYPE_DOCUMENT -> documentRepository.findById(chapterId).orElse(null);
             case CHAPTER_TYPE_VIDEO -> videoRepository.findById(chapterId).orElse(null);
+            case CHAPTER_TYPE_CODE -> {
+                CodeChapter codeChapter = (CodeChapter) chapter;
+                Problem existingProblem = codeChapter.getProblem();
+                existingProblem.setBoilerplateCodes(codeService.getBoilerplateCodes(existingProblem.getTitle()));
+                yield codeChapter;
+            }
             default -> chapter;
         };
-
         // Design Pattern Use: metadata storage
     }
 
@@ -59,6 +76,7 @@ public class ChapterService {
         Chapter newChapter = switch (chapter.get(CONTENT_TYPE_CHAPTER_FIELD)) {
             case CHAPTER_TYPE_DOCUMENT -> new DocumentChapter();
             case CHAPTER_TYPE_VIDEO -> new VideoChapter();
+            case CHAPTER_TYPE_CODE -> new CodeChapter();
             default -> new Chapter();
         };
 
@@ -85,6 +103,15 @@ public class ChapterService {
             videoChapter.setVideoType(chapter.get(VIDEO_TYPE_CHAPTER_FIELD));
             videoChapter.setVideoQuality(chapter.get(VIDEO_QUALITY_CHAPTER_FIELD));
             videoChapter.setVideoSize(chapter.get(VIDEO_SIZE_CHAPTER_FIELD));
+        } else if(newChapter instanceof CodeChapter codeChapter){
+            if(!validateRequestKeys(CODE_CHAPTER_CREATE_NOT_NULL_FIELDS, chapter)){
+                throw new RuntimeException("Invalid request body, missing required fields");
+            }
+
+            Problem problem = problemRepository.findById(chapter.get(PROBLEM_ID_CHAPTER_FIELD)).
+                    orElseThrow(() -> new RuntimeException("Problem not found"));
+
+            codeChapter.setProblem(problem);
         }
 
         newChapter = chapterRepository.save(newChapter);

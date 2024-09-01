@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
 import static com.example.coursecanvasspring.constants.StringConstants.CHAPTER_COLLECTION;
 
 @Getter
 @Setter
 @Document(collection = CHAPTER_COLLECTION)
-public class DocumentChapter extends Chapter{
+public class DocumentChapter extends Chapter implements Serializable {
 
     public DocumentChapter(){
         this.setContentType(StringConstants.CHAPTER_TYPE_DOCUMENT);

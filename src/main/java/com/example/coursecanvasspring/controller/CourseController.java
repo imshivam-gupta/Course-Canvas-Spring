@@ -16,11 +16,22 @@ import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @GetMapping(GET_COURSES_ROUTE)
+    public ResponseEntity<?> getCourses(){
+        return ResponseEntity.ok(courseService.getCourses());
+    }
+
+    @GetMapping(GET_COURSE_CATEGORIES_ROUTE)
+    public ResponseEntity<?> getCourseCategories(){
+        return ResponseEntity.ok(courseService.getCourseCategories());
+    }
 
     @GetMapping(GET_COURSE_ROUTE)
     public ResponseEntity<?> getChapter(@PathVariable String courseId) {

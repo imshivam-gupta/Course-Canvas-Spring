@@ -51,4 +51,5 @@ public class EnrolledCourse {
     private String reminderTime;
 
     private List<Section> unlockedSections;
+    private List<Student> mentors;
 }

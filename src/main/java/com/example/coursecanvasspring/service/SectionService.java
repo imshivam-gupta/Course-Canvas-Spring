@@ -45,6 +45,7 @@ public class SectionService {
         }
 
         Section newSection = new Section();
+        newSection.setNumOfDaysToComplete(Long.parseLong(reqBody.get(DAYS_TO_COMPLETE_SECTION_FIELD)));
         newSection.setTitle(reqBody.get(TITLE_SECTION_FIELD));
         newSection.setDescription(reqBody.get(DESCRIPTION_SECTION_FIELD));
         newSection.setPosition(getLastSectionPosition(courseId));

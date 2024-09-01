@@ -157,4 +157,12 @@ public class CourseService {
         existingCourse.setIsPublished(true);
         return courseRepository.save(existingCourse);
     }
+
+    public Iterable<Course> getCourses(){
+        return courseRepository.findAll();
+    }
+
+    public Iterable<CourseCategory> getCourseCategories(){
+        return courseCategoryRepository.findAll();
+    }
 }

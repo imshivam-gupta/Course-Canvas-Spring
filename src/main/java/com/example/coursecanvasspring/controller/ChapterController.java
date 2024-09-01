@@ -5,6 +5,9 @@ import com.example.coursecanvasspring.entity.section.Section;
 import com.example.coursecanvasspring.service.ChapterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ import static com.example.coursecanvasspring.constants.StringConstants.*;
 @RestController
 @Slf4j
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:5173")
 public class ChapterController {
 
     @Autowired
@@ -33,6 +37,7 @@ public class ChapterController {
     }
 
     @PatchMapping(UPDATE_CHAPTER_ROUTE)
+    @CachePut(value = "chapter", key = "#chapterId")
     public ResponseEntity<?> updateChapter(@RequestBody Map<String,String> chapterUpdate, @PathVariable String chapterId){
         Chapter updatedChapter = chapterService.updateChapter(chapterUpdate,chapterId);
         return ResponseEntity.ok(updatedChapter);
@@ -45,6 +50,7 @@ public class ChapterController {
     }
 
     @DeleteMapping(DELETE_CHAPTER_ROUTE)
+    @CacheEvict(value = "chapter", key = "#chapterId")
     public ResponseEntity<?> deleteChapter(@PathVariable String chapterId, @PathVariable String sectionId){
         chapterService.deleteChapter(chapterId,sectionId);
         return ResponseEntity.ok("Chapter deleted successfully");

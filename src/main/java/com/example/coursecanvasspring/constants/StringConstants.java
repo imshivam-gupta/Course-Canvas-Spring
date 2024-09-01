@@ -54,11 +54,13 @@ public class StringConstants {
     public static final String VIDEO_TYPE_CHAPTER_FIELD = "videoType";
     public static final String VIDEO_QUALITY_CHAPTER_FIELD = "videoQuality";
     public static final String VIDEO_SIZE_CHAPTER_FIELD = "videoSize";
+    public static final String PROBLEM_ID_CHAPTER_FIELD = "problemId";
 
     // Necessary Fields
     public static final String[] CHAPTER_CREATE_NOT_NULL_FIELDS = {TITLE_CHAPTER_FIELD, CONTENT_TYPE_CHAPTER_FIELD};
     public static final String[] DOC_CHAPTER_CREATE_NOT_NULL_FIELDS = {ARTICLE_URL_CHAPTER_FIELD};
-    public static final String[] VIDEO_CHAPTER_CREATE_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD,DURATION_CHAPTER_FIELD,THUMBNAIL_URL_CHAPTER_FIELD};
+    public static final String[] VIDEO_CHAPTER_CREATE_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD};
+    public static final String[] CODE_CHAPTER_CREATE_NOT_NULL_FIELDS = {PROBLEM_ID_CHAPTER_FIELD};
 
     public static final String[] DOC_CHAPTER_PUBLISH_NOT_NULL_FIELDS = {ARTICLE_URL_CHAPTER_FIELD};
     public static final String[] VIDEO_CHAPTER_PUBLISH_NOT_NULL_FIELDS = {VIDEO_URL_CHAPTER_FIELD,DURATION_CHAPTER_FIELD,THUMBNAIL_URL_CHAPTER_FIELD};
@@ -71,10 +73,11 @@ public class StringConstants {
     public static final String PUBLISHED_SECTION_FIELD = "isPublished";
     public static final String FREE_SECTION_FIELD = "isFree";
     public static final String CHAPTERS_SECTION_FIELD = "chapters";
+    public static final String DAYS_TO_COMPLETE_SECTION_FIELD = "numOfDaysToComplete";
 
-   // Necessary Fields
+    // Necessary Fields
     public static final String[] SECTION_CREATE_NOT_NULL_FIELDS = {TITLE_SECTION_FIELD};
-    public static final String[] SECTION_PUBLISH_NOT_NULL_FIELDS = {TITLE_SECTION_FIELD,BANNER_URL_SECTION_FIELD,POSITION_SECTION_FIELD};
+    public static final String[] SECTION_PUBLISH_NOT_NULL_FIELDS = {TITLE_SECTION_FIELD,DAYS_TO_COMPLETE_SECTION_FIELD,BANNER_URL_SECTION_FIELD,POSITION_SECTION_FIELD};
 
     // Course Category Fields
     public static final String NAME_CATEGORY_FIELD = "name";
@@ -147,7 +150,8 @@ public class StringConstants {
     // S3 Paths
     public static final String PROBLEM_OUTPUT_PATH = "problems/%s/tests/outputs/";
     public static final String PROBLEM_INPUT_PATH = "problems/%s/tests/inputs/";
-    public static final String BOILERPLATE_PATH = "problems/%s/boilerplate-full/function.%s";
+    public static final String BOILERPLATE_PATH_FULL = "problems/%s/boilerplate-full/function.%s";
+    public static final String BOILERPLATE_PATH = "problems/%s/boilerplate/function.%s";
 
     // AWS S3 Constants
     public static final String AWS_S3_ACCESS_KEY_ID = "${aws.s3.accessKeyId}";
@@ -195,6 +199,8 @@ public class StringConstants {
     public static final String BANNER_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/banner";
     public static final String UPDATE_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/update";
     public static final String PUBLISH_COURSE_ROUTE = COURSE_ROUTE_PREFIX + "/{courseId}/publish";
+    public static final String GET_COURSES_ROUTE = COURSE_ROUTE_PREFIX;
+    public static final String GET_COURSE_CATEGORIES_ROUTE = COURSE_ROUTE_PREFIX + "/categories";
 
     // Code Routes
     public static final String CODE_ROUTE_PREFIX = API_PREFIX + "/code";
@@ -213,9 +219,13 @@ public class StringConstants {
     public static final String COUPON_ROUTE_PREFIX = API_PREFIX + "/coupon";
     public static final String CREATE_COUPON_ROUTE = COUPON_ROUTE_PREFIX + "/create";
 
+    // Notion Routes
+    public static final String NOTION_ROUTE_PREFIX = API_PREFIX + "/notion";
+    public static final String GET_NOTION_PAGE_ROUTE = NOTION_ROUTE_PREFIX + "/getNotionPage";
+
     // Permitted Routes
     public static final String[] PUBLIC_ROUTES = {
-            SIGNUP_ROUTE, LOGIN_ROUTE
+            SIGNUP_ROUTE, LOGIN_ROUTE, GET_COURSES_ROUTE, GET_COURSE_CATEGORIES_ROUTE, GET_COURSE_ROUTE,GET_SECTION_ROUTE, GET_CHAPTER_ROUTE, GET_NOTION_PAGE_ROUTE
     };
 
     public static final String[] ADMIN_ROUTES = {

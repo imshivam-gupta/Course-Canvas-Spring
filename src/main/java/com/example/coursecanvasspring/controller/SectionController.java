@@ -14,6 +14,7 @@ import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @Slf4j
 @RequestMapping
 public class SectionController {
