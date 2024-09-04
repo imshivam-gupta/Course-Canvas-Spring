@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +20,10 @@ import static com.example.coursecanvasspring.constants.StringConstants.USER_COLL
 @Getter
 @Setter
 @Document(collection = USER_COLLECTION)
-public class Student extends User{
+public class Student extends User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public Student() {
         this.setRole(UserRole.STUDENT);
     }

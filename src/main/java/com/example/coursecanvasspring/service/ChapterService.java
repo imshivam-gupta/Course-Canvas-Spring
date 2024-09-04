@@ -12,6 +12,8 @@ import com.example.coursecanvasspring.repository.chapter.VideoRepository;
 import com.example.coursecanvasspring.repository.code.ProblemRepository;
 import com.example.coursecanvasspring.repository.section.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +64,10 @@ public class ChapterService {
             }
             default -> chapter;
         };
+
+        // convert to json and return
+
+
         // Design Pattern Use: metadata storage
     }
 
@@ -129,6 +135,7 @@ public class ChapterService {
         if(source.get(FREE_CHAPTER_FIELD) != null) target.setIsFree(Boolean.parseBoolean(source.get(FREE_CHAPTER_FIELD)));
     }
 
+    @CachePut(value = "chapter", key = "#chapterId")
     public Chapter updateChapter(Map<String,String> chapterUpdate, String chapterId){
         Chapter chapter = chapterRepository.findById(chapterId).
                 orElseThrow(() -> new RuntimeException("Chapter not found"));
@@ -204,6 +211,7 @@ public class ChapterService {
         return chapter;
     }
 
+    @CacheEvict(value = "chapter", key = "#chapterId")
     public void deleteChapter(String chapterId,String sectionId){
         Chapter chapter = chapterRepository.findById(chapterId).
                 orElseThrow(() -> new RuntimeException("Chapter not found"));

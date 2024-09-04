@@ -7,6 +7,9 @@ import com.example.coursecanvasspring.repository.course.CourseRepository;
 import com.example.coursecanvasspring.repository.section.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,11 +36,14 @@ public class SectionService {
     @Autowired
     private AmazonS3 amazonS3;
 
-
+    @Cacheable(value = "sections", key = "#sectionId")
     public Section getSection(String sectionId) throws RuntimeException{
-        return sectionRepository.findById(sectionId).
+        Section existing = sectionRepository.findById(sectionId).
                 orElseThrow(() -> new RuntimeException("Section not found"));
+        existing.getChapters().sort((c1,c2) -> (int) (c1.getPosition() - c2.getPosition()));
+        return existing;
     }
+
 
     public Section createSection(Map<String,String> reqBody, String courseId){
         if(!validateRequestKeys(SECTION_CREATE_NOT_NULL_FIELDS, reqBody)){
@@ -68,6 +74,7 @@ public class SectionService {
         if(source.get(FREE_SECTION_FIELD) != null) target.setIsFree(Boolean.valueOf(source.get(FREE_SECTION_FIELD)));
     }
 
+    @CachePut(value = "sections", key = "#sectionId")
     public Section addBanner(MultipartFile file, String sectionId) throws RuntimeException, IOException {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
@@ -85,6 +92,7 @@ public class SectionService {
         return course.getSections().size() + 1L;
     }
 
+    @CachePut(value = "sections", key = "#sectionId")
     public Section updateSection(Map<String,String> sectionUpdate, String sectionId){
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
@@ -94,6 +102,7 @@ public class SectionService {
         return section;
     }
 
+    @CachePut(value = "sections", key = "#sectionId")
     public Section publishSection(String sectionId){
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
@@ -129,6 +138,7 @@ public class SectionService {
         return section;
     }
 
+    @CachePut(value = "sections", key = "#sectionId")
     public Section unpublishSection(String sectionId, String courseId){
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
@@ -149,6 +159,7 @@ public class SectionService {
 
         return section;
     }
+
 
     public void deleteSection(String sectionId, String courseId){
         Section section = sectionRepository.findById(sectionId)

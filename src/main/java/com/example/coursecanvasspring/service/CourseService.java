@@ -10,6 +10,9 @@ import com.example.coursecanvasspring.repository.course.CourseCategoryRepository
 import com.example.coursecanvasspring.repository.course.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +43,7 @@ public class CourseService {
     @Autowired
     private AuthorizationService authorizationService;
 
+    @Cacheable(value = "courses", key = "#courseId")
     public Course getCourse(String courseId){
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
         course.getSections().sort(Comparator.comparingLong(Section::getPosition));
@@ -73,6 +77,7 @@ public class CourseService {
         return newCourse;
     }
 
+    @CacheEvict(value = "categories", key = "'categories'")
     public CourseCategory createCourseCategory(Map<String,String> reqBody){
         if(!validateRequestKeys(CATEGORY_CREATE_NOT_NULL_FIELDS, reqBody)){
             throw new RuntimeException("Invalid request body, missing required fields");
@@ -85,6 +90,7 @@ public class CourseService {
         return newCourseCategory;
     }
 
+    @CachePut(value = "courses", key = "#courseId")
     public Course addBanner(MultipartFile file, String courseId) throws RuntimeException, IOException {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
@@ -115,6 +121,7 @@ public class CourseService {
         target.setOwner(loggedInUser);
     }
 
+    @CachePut(value = "courses", key = "#courseId")
     public Course updateCourse(Map<String,String> courseUpdate, String courseId){
         Course existingcourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
@@ -123,6 +130,7 @@ public class CourseService {
         return courseRepository.save(existingcourse);
     }
 
+    @CachePut(value = "courses", key = "#courseId")
     public Course publishCourse(String courseId){
         Course existingCourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
@@ -158,11 +166,13 @@ public class CourseService {
         return courseRepository.save(existingCourse);
     }
 
+    @Cacheable(value = "courses", key = "'courses'")
     public Iterable<Course> getCourses(){
         return courseRepository.findAll();
     }
 
-    public Iterable<CourseCategory> getCourseCategories(){
+    @Cacheable(value = "categories", key = "'categories'")
+    public Iterable<CourseCategory> getCourseCategories() {
         return courseCategoryRepository.findAll();
     }
 }

@@ -4,11 +4,15 @@ import com.example.coursecanvasspring.entity.section.Section;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class SectionDeadline {
+public class SectionDeadline implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Section section;
     private LocalDateTime deadline;
     private Boolean isDeadlineExtended;

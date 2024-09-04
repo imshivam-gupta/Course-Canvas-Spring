@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 import static com.example.coursecanvasspring.constants.StringConstants.CHAPTER_COLLECTION;
 
+
 @Getter
 @Setter
 @Document(collection = CHAPTER_COLLECTION)

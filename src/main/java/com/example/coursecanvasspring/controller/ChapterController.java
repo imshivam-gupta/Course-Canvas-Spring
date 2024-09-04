@@ -37,7 +37,6 @@ public class ChapterController {
     }
 
     @PatchMapping(UPDATE_CHAPTER_ROUTE)
-    @CachePut(value = "chapter", key = "#chapterId")
     public ResponseEntity<?> updateChapter(@RequestBody Map<String,String> chapterUpdate, @PathVariable String chapterId){
         Chapter updatedChapter = chapterService.updateChapter(chapterUpdate,chapterId);
         return ResponseEntity.ok(updatedChapter);
@@ -50,7 +49,6 @@ public class ChapterController {
     }
 
     @DeleteMapping(DELETE_CHAPTER_ROUTE)
-    @CacheEvict(value = "chapter", key = "#chapterId")
     public ResponseEntity<?> deleteChapter(@PathVariable String chapterId, @PathVariable String sectionId){
         chapterService.deleteChapter(chapterId,sectionId);
         return ResponseEntity.ok("Chapter deleted successfully");

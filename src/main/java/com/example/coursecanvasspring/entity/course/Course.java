@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,9 @@ import static com.example.coursecanvasspring.constants.StringConstants.COURSE_CO
 @Getter
 @Setter
 @Document(collection = COURSE_COLLECTION)
-public class Course {
+public class Course implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String _id;
     private String title;
     private String description;

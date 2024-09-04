@@ -55,5 +55,7 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler{
         if(existingUser == null){
             userService.saveUser(user);
         }
+
+        response.sendRedirect("/");
     }
 }

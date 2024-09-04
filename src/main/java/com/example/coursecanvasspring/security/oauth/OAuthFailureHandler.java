@@ -21,9 +21,9 @@ public class OAuthFailureHandler implements AuthenticationFailureHandler {
         if(exception instanceof DisabledException){
             HttpSession session = request.getSession();
             session.setAttribute("message", "User is disabled, Email with verification link is sent on your email id !!");
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            response.sendRedirect("/login");
         } else{
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendRedirect("/login");
         }
     }
 }

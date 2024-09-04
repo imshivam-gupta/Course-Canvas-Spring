@@ -223,9 +223,11 @@ public class StringConstants {
     public static final String NOTION_ROUTE_PREFIX = API_PREFIX + "/notion";
     public static final String GET_NOTION_PAGE_ROUTE = NOTION_ROUTE_PREFIX + "/getNotionPage";
 
+    public static final String WEBSOCKET_ROUTE = "/ws/**";
+
     // Permitted Routes
     public static final String[] PUBLIC_ROUTES = {
-            SIGNUP_ROUTE, LOGIN_ROUTE, GET_COURSES_ROUTE, GET_COURSE_CATEGORIES_ROUTE, GET_COURSE_ROUTE,GET_SECTION_ROUTE, GET_CHAPTER_ROUTE, GET_NOTION_PAGE_ROUTE
+            SIGNUP_ROUTE, LOGIN_ROUTE, GET_COURSES_ROUTE, GET_COURSE_CATEGORIES_ROUTE, GET_COURSE_ROUTE,GET_SECTION_ROUTE, GET_CHAPTER_ROUTE, GET_NOTION_PAGE_ROUTE, WEBSOCKET_ROUTE
     };
 
     public static final String[] ADMIN_ROUTES = {

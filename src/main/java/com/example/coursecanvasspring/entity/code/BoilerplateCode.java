@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class BoilerplateCode implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
