@@ -23,6 +23,7 @@ public class StringConstants {
     public static final String ORDER_COLLECTION = "Order";
     public static final String COUPON_COLLECTION = "Coupon";
     public static final String ENROLLED_COURSE_COLLECTION = "EnrolledCourse";
+    public static final String CHAT_COLLECTION = "Chat";
 
 
     // Authentication Strategies
@@ -169,6 +170,7 @@ public class StringConstants {
     public static final String USER_ROUTE = API_PREFIX + "/user";
     public static final String USER_PROFILE_PICTURE_ROUTE = "/profilePicture";
     public static final String STUDENT_ENROLLED_COURSES_ROUTE =  "/enrolledCourses";
+    public static final String GET_INSTRUCTORS= "/instructors";
 
     // Chapter Routes
     public static final String CHAPTER_ROUTE_PREFIX = API_PREFIX + "/chapter";

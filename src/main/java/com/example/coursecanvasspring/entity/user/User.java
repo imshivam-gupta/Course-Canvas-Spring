@@ -1,5 +1,6 @@
 package com.example.coursecanvasspring.entity.user;
 
+import com.example.coursecanvasspring.enums.Status;
 import com.example.coursecanvasspring.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -47,6 +48,8 @@ public class User implements UserDetails, Serializable {
     private String youtube;
     private String twitter;
     private String linkedin;
+
+    private Status status;
 
     @JsonIgnore
     @Override

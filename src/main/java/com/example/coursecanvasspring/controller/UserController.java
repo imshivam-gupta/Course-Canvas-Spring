@@ -15,6 +15,7 @@ import static com.example.coursecanvasspring.constants.StringConstants.*;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping(USER_ROUTE)
 public class UserController {
 
@@ -64,6 +65,11 @@ public class UserController {
         Student student = userService.findStudentByEmail(currentUser.getEmail())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         return ResponseEntity.ok(student.getEnrolledCourses());
+    }
+
+    @GetMapping(GET_INSTRUCTORS)
+    public ResponseEntity<?> getInstructors() {
+        return ResponseEntity.ok(userService.getInstructors());
     }
 
 }

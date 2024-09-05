@@ -7,6 +7,7 @@ import com.example.coursecanvasspring.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import static com.example.coursecanvasspring.constants.StringConstants.LOGIN_ROU
 import static com.example.coursecanvasspring.constants.StringConstants.SIGNUP_ROUTE;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @Slf4j
 public class AuthController {
 
